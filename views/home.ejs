@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Coffee Shop Website</title>
+    <link rel="stylesheet" href="/public/css/style.css"> <!-- Ensure this path is correct -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+
+<body>
+
+    <!-- Your HTML content -->
+    <!--Link with navbar1-->
+    <%- include('partials/navbar.ejs') %>
+
+        <!--Home-->
+        <section class="home" id="home">
+            <div class="home-text">
+                <h1>Start your day <br>with Cofee</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ullam accusantium doloremque non itaque
+                    nihil aliquid, quam earum alias eum sed ea, fugit quia maxime tempore, aspernatur unde impedit
+                    quasi!</p>
+                <a href="/products" class="btn">Shop Now</a>
+            </div>
+            <div class="home-img">
+                <img src="/public/img/main.png" alt="">
+            </div>
+        </section>
+
+        <%- include('partials/footer.ejs') %>
+            <script src="/public/js/script.js"></script> <!-- If you have a script file -->
+</body>
+
+</html>
