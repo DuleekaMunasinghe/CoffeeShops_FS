@@ -11,8 +11,12 @@
 
 <body>
 
+
+
     <!-- Your HTML content -->
     <%- include('partials/navbar.ejs') %>
+
+
 
         <!--Products-->
         <Section class="products" id="products">
@@ -77,12 +81,40 @@
                     </div>
                 </div>
             </div>
+
+            <!--shopping cart-->
+            <div class="cartTab">
+                <h1>Shopping Cart</h1>
+                <div class="listCart">
+                    <!-- <div class="item">
+                        <div class="image">
+                            <img src="/public/img/p1.png" alt="">
+                        </div>
+
+                        <div class="name">NAME</div>
+                        <div class="totalPrice">$200</div>
+                        <div class="quantity">
+                             <span class="minus"><</span>
+                             <span>1</span>
+                            <span class="plus">></span>
+                        </div>
+                    </div> -->
+
+
+                </div>
+
+                <div class="btn">
+                    <button class="close">CLOSE</button>
+                    <button class="checkOut">CHECKOUT</button>
+                </div>
+            </div>
+
         </Section>
 
-
-        <!--footer Section-->
-        <%- include('partials/footer.ejs') %>
-            <script src="/public/js/script.js"></script> <!-- If you have a script file -->
 </body>
+<!--footer Section-->
+<%- include('partials/footer.ejs') %>
+    <script src="/public/js/script.js"></script> <!-- If you have a script file -->
+    </body>
 
 </html>

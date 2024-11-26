@@ -52,6 +52,10 @@ app.get('/logged_products', function (req, res) {
   res.render("logged_products"); // Ensure you have a products.ejs file
 });
 
+// Route for the logged_products page
+app.get('/adminpannel', function (req, res) {
+  res.render("adminpannel"); // Ensure you have a products.ejs file
+});
 
 
 // Routes product page
@@ -138,7 +142,7 @@ app.post("/auth", function (request, response) {
 });
 
 // Route admin dashboard
-app.get("/dashboard", function (req, res) {
+app.get("/adminpannel", function (req, res) {
   //in order to make the admin accessible to admin pages, we need to go database and manupilate the value of "is_admin" 0 to 1, then admin can access the dashboard
   if (!req.session.loggedIn) {
     res.redirect("/login");
@@ -184,7 +188,7 @@ app.get("/dashboard", function (req, res) {
 
                 console.log("Histogram", histogram);
 
-                res.render("dashboard", { ratings: results });
+                res.render("adminpannel", { ratings: results });
               }
             );
           } else {
@@ -248,6 +252,8 @@ app.post("/submit_ratings", function (req, res) {
     );
   }
 });
+
+
 
 
 // Route for logout
