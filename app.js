@@ -6,12 +6,12 @@ var conn = require("./db");
 var session = require("express-session");
 
 app.use(      // the session we are using
-    session({
-      secret: "secret",
-      resave: true,
-      saveUninitialized: true,
-    })
-  );
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -21,25 +21,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());    // 
 
 // Serve static files from the "public" directory
-app.use('/public',express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 // Route for the home page
 app.get('/', function (req, res) {
-    res.render("home"); // Render the "home.ejs" view
+  res.render("home"); // Render the "home.ejs" view
 });
 
 // Route for the login page
 app.get('/login', function (req, res) {
-    res.render('login'); // Make sure you have a login.ejs file in your views directory
+  res.render('login'); // Make sure you have a login.ejs file in your views directory
 });
 
 app.get('/register', function (req, res) {
-    res.render("register"); // Render register.ejs
+  res.render("register"); // Render register.ejs
 });
 
 // Route for the About Us page
 app.get('/aboutus', function (req, res) {
-    res.render("aboutus"); // Render the "aboutus.ejs" view
+  res.render("aboutus"); // Render the "aboutus.ejs" view
 });
 
 // Route for the products page
@@ -76,36 +76,36 @@ app.get('/customers', function (req, res) {
 
 // Registration Process
 app.post("/reg", function (request, response) {
-    console.log("Register Request", request.body);
-  
-    if (request.body.password !== request.body.confirmPassword) {
-      console.log("Password not match");
-      response.redirect("/register");
-      response.end();
-  
-    } else {
-      console.log("Password match");
-      
-      // Hash the password
-  
-      var hashedPassword = bcrypt.hashSync(request.body.password, 10);
-      console.log("Hashed Password", hashedPassword);
-  
-      // ADD TO DATABASE
-  
-      conn.query(
-        "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
-        [request.body.firstName, request.body.lastName, request.body.email, hashedPassword],
-        function (error, results, fields) {
-          if (error) throw error;
-          console.log("User added to database");
-          response.redirect("/login");
-        }
-      );
-    }
-  });
+  console.log("Register Request", request.body);
 
-  // Login Process
+  if (request.body.password !== request.body.confirmPassword) {
+    console.log("Password not match");
+    response.redirect("/register");
+    response.end();
+
+  } else {
+    console.log("Password match");
+
+    // Hash the password
+
+    var hashedPassword = bcrypt.hashSync(request.body.password, 10);
+    console.log("Hashed Password", hashedPassword);
+
+    // ADD TO DATABASE
+
+    conn.query(
+      "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
+      [request.body.firstName, request.body.lastName, request.body.email, hashedPassword],
+      function (error, results, fields) {
+        if (error) throw error;
+        console.log("User added to database");
+        response.redirect("/login");
+      }
+    );
+  }
+});
+
+// Login Process
 app.post("/auth", function (request, response) {
   console.log("Login Request", request.body);
 
@@ -264,8 +264,56 @@ app.get("/logout", function (req, res) {
   console.log("User logged out");
 });
 
+
+
+// REST API functions 
+app.get("/api/products", function (req, res) {
+  const productId = req.query.id; // Change from req.params.id to req.query.id
+
+  // If no product ID is provided, fetch all products
+  if (!productId) {
+    const queryAll = 'SELECT * FROM products';
+    conn.query(queryAll, function (err, results) {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({
+          error: 'Internal server error',
+          message: 'Failed to retrieve products'
+        });
+      }
+
+      // Return all products
+      return res.status(200).json(results);
+    });
+  } else {
+    // If product ID is provided, search for specific product
+    const query = 'SELECT * FROM products WHERE id = ?';
+    conn.query(query, [productId], function (err, results) {
+      // Handle any database errors
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({
+          error: 'Internal server error',
+          message: 'Failed to retrieve product'
+        });
+      }
+
+      // If no product found
+      if (results.length === 0) {
+        return res.status(404).json({
+          error: 'Not Found',
+          message: `Product with ID ${productId} not found`
+        });
+      }
+
+      // Return the first (and should be only) matching product
+      res.status(200).json(results[0]);
+    });
+  }
+});
+
 // Start the server
 const PORT = 3001;
 app.listen(PORT, () => {
-    console.log(`Node app is running on port ${PORT}`);
+  console.log(`Node app is running on port ${PORT}`);
 });
