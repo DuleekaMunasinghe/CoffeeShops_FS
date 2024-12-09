@@ -267,7 +267,7 @@ app.get("/logout", function (req, res) {
 
 
 // REST API functions 
-app.get("/api/products", function (req, res) {
+app.get("/api/products", function (req, res) { //api for product search
   const productId = req.query.id; // Change from req.params.id to req.query.id
 
   // If no product ID is provided, fetch all products
@@ -311,6 +311,18 @@ app.get("/api/products", function (req, res) {
     });
   }
 });
+
+// Node.js Express server
+app.post('/api/checkout', (req, res) => {
+  const cart = req.body; // Assume the cart data is sent in the body
+
+  // Process the cart data (e.g., save to database, initiate payment)
+  console.log("Received cart for checkout:", cart);
+
+  // Respond to client
+  res.status(200).json({ message: "Checkout completed successfully" });
+});
+
 
 // Start the server
 const PORT = 3001;
