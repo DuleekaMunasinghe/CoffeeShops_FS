@@ -94,8 +94,8 @@ app.post("/reg", function (request, response) {
     // ADD TO DATABASE
 
     conn.query(
-      "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
-      [request.body.firstName, request.body.lastName, request.body.email, hashedPassword],
+      "INSERT INTO users (first_name, last_name, address, email,  password) VALUES (?, ?, ?, ?, ?)",
+      [request.body.firstName, request.body.lastName, request.body.address, request.body.email, hashedPassword],
       function (error, results, fields) {
         if (error) throw error;
         console.log("User added to database");

@@ -155,9 +155,7 @@ closeButton.addEventListener('click', () => {
     shopping.classList.remove('active');
     shopping.classList.toggle('active')
 
-    // Reset the cart
-    cart = []; // Clear the cart array
-    renderCart(); // Re-render the cart (this will show the "empty cart" message)
+   
 });
 
 // Select the checkout button

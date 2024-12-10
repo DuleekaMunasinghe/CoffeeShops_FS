@@ -52,6 +52,7 @@ label {
 
 input[type="text"],
 input[type="email"],
+input[type="address"],
 input[type="password"] {
     padding: 10px;
     margin-bottom: 15px; /* Space between input fields */
@@ -62,6 +63,7 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
+input[type="address"]:focus,
 input[type="password"]:focus {
     border-color: var(--secondary-color); /* Change border color on focus */
     outline: none; /* Remove default outline */
